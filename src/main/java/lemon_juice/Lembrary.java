@@ -1,5 +1,7 @@
 package lemon_juice;
 
+import lemon_juice.event.MobDropEvents;
+import lemon_juice.tag.TagRegistry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -17,12 +19,21 @@ public class Lembrary {
     public Lembrary() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        // Register Tags
+        TagRegistry.init();
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {}
+    /**
+     * Registers mob drops from <code>BeheadingSwordItem</code>s
+     * @param event The <code>FMLCommonSetupEvent</code> that will set up the drops
+     */
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(new MobDropEvents());
+    }
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {}
