@@ -2,29 +2,26 @@ package lemon_juice;
 
 import lemon_juice.event.MobDropEvents;
 import lemon_juice.tag.TagRegistry;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 @Mod(Lembrary.MOD_ID)
 public class Lembrary {
     public static final String MOD_ID = "lembrary";
 
-    public Lembrary() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Lembrary(IEventBus modEventBus) {
+        modEventBus.addListener(this::commonSetup);
 
         // Register Tags
         TagRegistry.init();
 
-        modEventBus.addListener(this::commonSetup);
-
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
     }
 
     /**
@@ -32,7 +29,7 @@ public class Lembrary {
      * @param event The <code>FMLCommonSetupEvent</code> that will set up the drops
      */
     private void commonSetup(final FMLCommonSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new MobDropEvents());
+        NeoForge.EVENT_BUS.register(new MobDropEvents());
     }
 
     @SubscribeEvent

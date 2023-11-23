@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -103,7 +103,7 @@ public class TunnelerItem extends DiggerItem {
 
                 if (currentBlockState.getDestroySpeed(world, posCurrent) >= 0
                         && player.mayUseItemAt(posCurrent, sideHit, stack)
-                        && ForgeEventFactory.doPlayerHarvestCheck(player, currentBlockState, true)
+                        && EventHooks.doPlayerHarvestCheck(player, currentBlockState, true)
                         && this.getDestroySpeed(stack, currentBlockState) > 1
                         && (currentBlockState.canHarvestBlock(world, pos, player)
                         || currentBlockState.is(this.getTier().getTag()))) {
@@ -116,7 +116,7 @@ public class TunnelerItem extends DiggerItem {
                         }
                     } else if (player instanceof ServerPlayer) {
                         ServerPlayer mp = (ServerPlayer) player;
-                        int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
+                        int xpGivenOnDrop = CommonHooks.onBlockBreakEvent(world, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
                         if (blockCurrent.onDestroyedByPlayer(currentBlockState, world, posCurrent, player, true, currentBlockState.getFluidState()) && world instanceof ServerLevel) {
                             BlockEntity tile = world.getBlockEntity(posCurrent);
                             blockCurrent.destroy(world, posCurrent, currentBlockState);

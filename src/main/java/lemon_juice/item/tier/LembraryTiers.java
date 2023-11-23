@@ -7,8 +7,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.ForgeTier;
-import net.minecraftforge.common.TierSortingRegistry;
+import net.neoforged.neoforge.common.SimpleTier;
+import net.neoforged.neoforge.common.TierSortingRegistry;
 
 import java.util.List;
 
@@ -30,16 +30,26 @@ public class LembraryTiers {
 
     // This needs to be registered before UMBRALITE_TIER.
     public static final Tier NECRONITE_TIER = TierSortingRegistry.registerTier(
-            new ForgeTier(necroniteTier.level(), necroniteTier.uses(), necroniteTier.speed(), necroniteTier.attackDamageBonus(), necroniteTier.enchantmentValue(),
-                    TagRegistry.Blocks.NEEDS_NECRONITE_TOOL, () -> Ingredient.of(TagRegistry.Items.INGOTS_NECRONITE)), new ResourceLocation(Lembrary.MOD_ID, "necronite"), List.of(Tiers.NETHERITE), List.of());
+            new SimpleTier(necroniteTier.level(), necroniteTier.uses(), necroniteTier.speed(), necroniteTier.attackDamageBonus(), necroniteTier.enchantmentValue(),
+                    TagRegistry.Blocks.NEEDS_NECRONITE_TOOL, () -> Ingredient.of(TagRegistry.Items.INGOTS_NECRONITE)), getResourceLocation("necronite"), List.of(Tiers.NETHERITE), List.of());
 
     public static final Tier BLUTSTEIN_TIER = TierSortingRegistry.registerTier(
-            new ForgeTier(blutsteinTier.level(), blutsteinTier.uses(), blutsteinTier.speed(), blutsteinTier.attackDamageBonus(), blutsteinTier.enchantmentValue(),
-                    BlockTags.NEEDS_IRON_TOOL, () -> Ingredient.of(TagRegistry.Items.GEMS_BLUTSTEIN)), new ResourceLocation(Lembrary.MOD_ID, "blutstein"), List.of(Tiers.IRON), List.of(Tiers.DIAMOND));
+            new SimpleTier(blutsteinTier.level(), blutsteinTier.uses(), blutsteinTier.speed(), blutsteinTier.attackDamageBonus(), blutsteinTier.enchantmentValue(),
+                    BlockTags.NEEDS_IRON_TOOL, () -> Ingredient.of(TagRegistry.Items.GEMS_BLUTSTEIN)), getResourceLocation("blutstein"), List.of(Tiers.IRON), List.of(Tiers.DIAMOND));
     public static final Tier UMBRALITE_TIER = TierSortingRegistry.registerTier(
-            new ForgeTier(umbraliteTier.level(), umbraliteTier.uses(), umbraliteTier.speed(), umbraliteTier.attackDamageBonus(), umbraliteTier.enchantmentValue(),
-                    TagRegistry.Blocks.NEEDS_UMBRALITE_TOOL, () -> Ingredient.of(TagRegistry.Items.GEMS_UMBRALITE)), new ResourceLocation(Lembrary.MOD_ID, "umbralite"), List.of(NECRONITE_TIER), List.of());
+            new SimpleTier(umbraliteTier.level(), umbraliteTier.uses(), umbraliteTier.speed(), umbraliteTier.attackDamageBonus(), umbraliteTier.enchantmentValue(),
+                    TagRegistry.Blocks.NEEDS_UMBRALITE_TOOL, () -> Ingredient.of(TagRegistry.Items.GEMS_UMBRALITE)), getResourceLocation("umbralite"), List.of(NECRONITE_TIER), List.of());
     public static final Tier ZWEIITE_TIER = TierSortingRegistry.registerTier(
-            new ForgeTier(zweiiteTier.level(), zweiiteTier.uses(), zweiiteTier.speed(), zweiiteTier.attackDamageBonus(), zweiiteTier.enchantmentValue(),
-                    BlockTags.NEEDS_DIAMOND_TOOL, () -> Ingredient.of(TagRegistry.Items.INGOTS_ZWEIITE)), new ResourceLocation(Lembrary.MOD_ID, "zweiite"), List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
+            new SimpleTier(zweiiteTier.level(), zweiiteTier.uses(), zweiiteTier.speed(), zweiiteTier.attackDamageBonus(), zweiiteTier.enchantmentValue(),
+                    BlockTags.NEEDS_DIAMOND_TOOL, () -> Ingredient.of(TagRegistry.Items.INGOTS_ZWEIITE)), getResourceLocation("zweiite"), List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
+
+    /**
+     * Gets the <code>ResourceLocation</code> of a given material
+     *
+     * @param materialName The <code>String</code> of the material name
+     * @return the <code>ResourceLocation</code> of a given material
+     */
+    private static ResourceLocation getResourceLocation(String materialName){
+        return new ResourceLocation(Lembrary.MOD_ID, materialName);
+    }
 }
